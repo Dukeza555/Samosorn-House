@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k6dX2OQZl+X8JKpHQ7DI7ARf7blfRQ+r6abcPN+wX1cfqex9oKpEK3FH5hsv7SIR8CJ1zw3Z0kpXA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+        <!-- Meta Tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>สโมสรเฮาส์</title>
+        
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        
+        <!-- Swiper CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+        
+        <!-- Swiper JS (โหลดแบบ defer เพื่อให้โหลดหลังจาก DOM พร้อม) -->
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
+        
+        <style>
+            /* Hero Section */
+            .hero-section {
+                background-image: url('https://via.placeholder.com/1500x800?text=Stunning+Vacation+Home');
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                height: 80vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                color: white;
+                position: relative;
+            }
+            .hero-overlay {
+                background-color: rgba(0, 0, 0, 0.5);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .hero-content {
+                z-index: 1;
+                max-width: 800px;
+            }
+            .hero-title {
+                font-size: 4rem;
+                font-weight: 700;
+                line-height: 1.3;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .hero-description {
+                font-size: 1.5rem;
+                margin-top: 20px;
+                font-weight: 300;
+            }
+            .hero-button {
+                background-color: #e54646;
+                padding: 14px 40px;
+                border-radius: 50px;
+                color: white;
+                text-transform: uppercase;
+                font-weight: bold;
+                font-size: 14px;
+                margin-top: 30px;
+                transition: all 0.3s ease;
+            }
+            .hero-button:hover {
+                background-color: #ca3838;
+                transform: translateY(-4px);
+            }
+    
+            /* Gallery container */
+            .gallery-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 30px;
+                margin-top: 60px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+    
+            .house-card {
+                position: relative;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease-in-out;
+                cursor: pointer;
+                background-color: white;
+            }
+    
+            .house-card:hover {
+                transform: translateY(-5px);
+            }
+    
+            .slider-container {
+                position: relative;
+                width: 100%;
+                height: 250px;
+                overflow: hidden;
+                border-radius: 10px;
+            }
+    
+            .slider {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+            }
+    
+            .slider img {
+                width: 100%;
+                height: 250px;
+                object-fit: cover;
+            }
+    
+            .control-btn {
+                position: absolute;
+                top: 50%;
+                z-index: 10;
+                padding: 10px;
+                background-color: rgba(0,0,0,0.5);
+                color: white;
+                font-size: 2rem;
+                cursor: pointer;
+                border: none;
+                transform: translateY(-50%);
+            }
+    
+            .prev-btn {
+                left: 10px;
+            }
+    
+            .next-btn {
+                right: 10px;
+            }
+    
+            .house-info {
+                padding: 20px;
+            }
+            .house-title {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+            .house-description {
+                font-size: 1rem;
+                color: #777;
+                margin-bottom: 15px;
+            }
+            .price {
+                font-size: 1.2rem;
+                color: #e54646;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+    
+            .book-btn, .details-btn {
+                background-color: #e54646;
+                padding: 10px 20px;
+                color: white;
+                border-radius: 5px;
+                font-weight: bold;
+                transition: all 0.3s ease;
+                display: inline-block;
+                margin-right: 10px;
+                text-decoration: none;
+                text-align: center;
+            }
+    
+            .book-btn:hover, .details-btn:hover {
+                background-color: #ca3838;
+                transform: translateY(-5px);
+            }
+        </style>
+    </head>
+
+<body class="bg-gray-100 font-sans">
+
+    <header class="bg-red-500 text-white">
+        <div class="max-w-7xl mx-auto px-4">
+          <nav class="flex items-center justify-between h-16">
+            
+            <!-- โลโก้ด้านซ้าย -->
+            <div class="flex items-center space-x-2">
+              <img src="Logo.jpg" alt="Logo" class="h-12 w-auto">
+              <span class="font-bold text-xl">SamoSorn House</span>
+            </div>
+            
+            <!-- เมนูกลาง
+            <ul class="hidden md:flex space-x-6">
+              <li><a href="#" class="hover:text-yellow-300">Buy</a></li>
+              <li><a href="#" class="hover:text-yellow-300">Rent</a></li>
+              <li><a href="#" class="hover:text-yellow-300">Article</a></li>
+              <li><a href="#" class="hover:text-yellow-300">FAQ</a></li>
+              <li><a href="#" class="hover:text-yellow-300">For Agents</a></li>
+              <li><a href="#" class="hover:text-yellow-300">About Us</a></li>
+            </ul> -->
+            
+            <!-- ส่วนขวา: เส้นแบ่ง | Login | Register | ภาษา -->
+            <div class="flex items-center space-x-4">
+              <!-- เส้นแบ่งแนวตั้ง -->
+              <div class="hidden md:block border-l border-yellow-300 h-6"></div>
+              
+              <!-- ปุ่ม Home -->
+              <a href="#" class="hidden md:inline hover:text-yellow-300">Home</a>
+              
+              <!-- ปุ่ม Contact -->
+              <a href="#" class="hidden md:inline border border-white px-3 py-1 rounded hover:bg-white hover:text-red-700 transition">
+                Contact
+              </a>
+              
+              <!-- เส้นแบ่งแนวตั้ง -->
+              <div class="hidden md:block border-l border-yellow-300 h-6"></div>
+              
+              <!-- เลือกภาษา -->
+              <div class="flex items-center space-x-1 hover:text-yellow-300 cursor-pointer">
+                <span>EN</span>
+                <i class="fas fa-chevron-down text-sm"></i>
+              </div>
+            </div>
+            
+          </nav>
+        </div>
+      </header>
+      
+
+    <section class="relative w-full h-screen bg-gray-100">
+        <!-- Wrapper สำหรับ Swiper -->
+        <div class="swiper-container w-full h-full">
+          <!-- Slide Container -->
+          <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide flex items-center justify-center bg-contain bg-center" style="background-image:url('Gub.jpg');">
+              <div class="text-white text-center">
+                <h1 class="text-4xl md:text-5xl font-bold">บ้านเดี่ยว ให้เช่า</h1>
+                <p class="text-xl mt-4">สามารถดูรายละเอียดด้านล่างได้</p>
+                <button class="mt-6 bg-red-500 px-6 py-2 rounded-full font-semibold hover:bg-red-700 transition">CONTACT</button>
+              </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="swiper-slide flex items-center justify-center bg-contain bg-center" style="background-image:url('Gift.jpg');">
+              <div class="text-white text-center">
+                <h1 class="text-4xl md:text-5xl font-bold">บ้านสวย บรรยากาศดี</h1>
+                <p class="text-xl mt-4">สามารถดูรายละเอียดด้านล่างได้</p>
+              </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="swiper-slide flex items-center justify-center bg-contain bg-center" style="background-image:url('Guf.jpg');">
+              <div class="text-white text-center">
+                <h1 class="text-4xl md:text-5xl font-bold">อุปกรณ์ใช้ไฟฟ้าให้ครบไม่ต้องจ่ายเพิ่ม</h1>
+                <p class="text-xl mt-4">ติดต่อได้ที่ด้านล่าง</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- ปุ่มนาวิเกชัน -->
+          <div class="swiper-button-next text-white"></div>
+          <div class="swiper-button-prev text-white"></div>
+          
+          <!-- จุดบอกสไลด์ -->
+          <div class="swiper-pagination"></div>
+        </div>
+      </section>
+      
+    <!-- Featured Homes Section -->
+    <section class="max-w-7xl mx-auto py-16" id="homes">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-semibold text-gray-800">บ้านเช่า</h2>
+            <p class="text-xl text-gray-600 mt-4">เลือกบ้านตามด้านล่าง</p>
+        </div>
+
+        <div class="gallery-container">
+            <!-- ตัวอย่าง House Card 1 -->
+            <div class="house-card">
+                <div class="slider-container">
+                    <div class="slider" id="slider1">
+                        <img src="Duke.jpg" alt="House 1 Image 1">
+                        <img src="Duke.jpg" alt="House 1 Image 2">
+                        <img src="Duke.jpg" alt="House 1 Image 3">
+                    </div>
+                    <button class="control-btn prev-btn" id="prevBtn1">‹</button>
+                    <button class="control-btn next-btn" id="nextBtn1">›</button>
+                </div>
+                <div class="house-info">
+                    <h3 class="house-title">หลังที่ 1</h3>
+                    <p class="house-description">ความกว้างบลาๆ บลาๆ </p>
+                    <p class="price">5,000 บาท</p>
+                    <a href="house-detail-1.html" class="details-btn">View Details</a>
+                    <a href="#contact" class="book-btn">Book Now</a>
+                </div>
+            </div>
+            <!-- ตัวอย่าง House Card 2 -->
+            <div class="house-card">
+                <div class="slider-container">
+                    <div class="slider" id="slider2">
+                        <img src="Duke.jpg" alt="House 2 Image 1">
+                        <img src="Duke.jpg" alt="House 2 Image 2">
+                        <img src="Duke.jpg" alt="House 2 Image 3">
+                    </div>
+                    <button class="control-btn prev-btn" id="prevBtn2">‹</button>
+                    <button class="control-btn next-btn" id="nextBtn2">›</button>
+                </div>
+                <div class="house-info">
+                    <h3 class="house-title">หลังที่ 2</h3>
+                    <p class="house-description">ความกว้างบลาๆ บลาๆ </p>
+                    <p class="price">5,000 บาท</p>
+                    <a href="house-detail-2.html" class="details-btn">View Details</a>
+                    <a href="#contact" class="book-btn">Book Now</a>
+                </div>
+            </div>
+            <!-- ตัวอย่าง House Card 3 -->
+            <div class="house-card">
+                <div class="slider-container">
+                    <div class="slider" id="slider3">
+                        <img src="Duke.jpg" alt="House 3 Image 1">
+                        <img src="Duke.jpg" alt="House 3 Image 2">
+                        <img src="Duke.jpg" alt="House 3 Image 3">
+                    </div>
+                    <button class="control-btn prev-btn" id="prevBtn3">‹</button>
+                    <button class="control-btn next-btn" id="nextBtn3">›</button>
+                </div>
+                <div class="house-info">
+                    <h3 class="house-title">หลังที่ 3</h3>
+                    <p class="house-description">ความกว้างบลาๆ บลาๆ </p>
+                    <p class="price">5,000 บาท</p>
+                    <a href="house-detail-3.html" class="details-btn">View Details</a>
+                    <a href="#contact" class="book-btn">Book Now</a>
+                </div>
+            </div>
+            <!-- ตัวอย่าง House Card 4 -->
+            <div class="house-card">
+                <div class="slider-container">
+                    <div class="slider" id="slider4">
+                        <img src="Duke.jpg" alt="House 4 Image 1">
+                        <img src="Duke.jpg" alt="House 4 Image 2">
+                        <img src="Duke.jpg" alt="House 4 Image 3">
+                    </div>
+                    <button class="control-btn prev-btn" id="prevBtn4">‹</button>
+                    <button class="control-btn next-btn" id="nextBtn4">›</button>
+                </div>
+                <div class="house-info">
+                    <h3 class="house-title">หลังที่ 4</h3>
+                    <p class="house-description">ความกว้างบลาๆ บลาๆ </p>
+                    <p class="price">5,000 บาท</p>
+                    <a href="house-detail-4.html" class="details-btn">View Details</a>
+                    <a href="#contact" class="book-btn">Book Now</a>
+                </div>
+            </div>
+            <!-- ตัวอย่าง House Card 5 -->
+            <div class="house-card">
+                <div class="slider-container">
+                    <div class="slider" id="slider5">
+                        <img src="Duke.jpg" alt="House 5 Image 1">
+                        <img src="Duke.jpg" alt="House 5 Image 2">
+                        <img src="Duke.jpg" alt="House 5 Image 3">
+                    </div>
+                    <button class="control-btn prev-btn" id="prevBtn5">‹</button>
+                    <button class="control-btn next-btn" id="nextBtn5">›</button>
+                </div>
+                <div class="house-info">
+                    <h3 class="house-title">หลังที่ 5</h3>
+                    <p class="house-description">ความกว้างบลาๆ บลาๆ </p>
+                    <p class="price">5,000 บาท</p>
+                    <a href="house-detail-5.html" class="details-btn">View Details</a>
+                    <a href="#contact" class="book-btn">Book Now</a>
+                </div>
+            </div>
+            <!-- ตัวอย่าง House Card 6 -->
+            <div class="house-card">
+                <div class="slider-container">
+                    <div class="slider" id="slider6">
+                        <img src="Duke.jpg" alt="House 6 Image 1">
+                        <img src="Duke.jpg" alt="House 6 Image 2">
+                        <img src="Duke.jpg" alt="House 6 Image 3">
+                    </div>
+                    <button class="control-btn prev-btn" id="prevBtn6">‹</button>
+                    <button class="control-btn next-btn" id="nextBtn6">›</button>
+                </div>
+                <div class="house-info">
+                    <h3 class="house-title">หลังที่ 6</h3>
+                    <p class="house-description">ความกว้างบลาๆ บลาๆ </p>
+                    <p class="price">5,000 บาท</p>
+                    <a href="house-detail-6.html" class="details-btn">View Details</a>
+                    <a href="#contact" class="book-btn">Book Now</a>
+                </div>
+            </div>
+            <!-- คุณสามารถคัดลอก house-card เดิมแล้วเปลี่ยนภาพและข้อความได้ เพื่อให้ครบ 10 ใบ -->
+        </div>
+    </section>
+
+<!-- Contact Section -->
+<section class="bg-gray-800 text-white py-8" id="contact">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
+
+        <!-- ส่วน iframe ชิดซ้าย -->
+        <div class="md:w-1/2">
+            <div class="w-full h-64 md:h-80 bg-gray-700 rounded-lg overflow-hidden">
+                <!-- ตัวอย่าง Iframe แผนที่ -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d61291.61324880801!2d103.21635357910158!3d16.234528900000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3122a364d763caab%3A0x5c3f1d47421f6ac5!2z4Liq4LmC4Lih4Liq4Lij4LmA4Liu4Liy4Liq4LmM!5e0!3m2!1sth!2sth!4v1734037548138!5m2!1sth!2sth" 
+                width="610" height="320" style="border:0;" allowfullscreen="" loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+        <!-- ส่วนข้อมูลการติดต่อและฟอร์ม ชิดขวา -->
+        <div class="md:w-1/2 text-right">
+            <h2 class="text-3xl font-semibold">ข้อมูลการติดต่อ</h2>
+            <p class="text-md text-gray-300 leading-relaxed mt-4">
+                ที่อยู่: 102 ตำบลขามเรียง อำเภอกันทรวิชัย จังหวัดมหาสารคาม 44150<br>
+                เปิดให้บริการ: ตลอด 24 ชั่วโมง<br>
+                โทรศัพท์: 086-412-7353<br>
+                พิกัด: 67M2+RG ตำบลขามเรียง อำเภอกันทรวิชัย มหาสารคาม.
+            </p>
+            <form class="max-w-md ml-auto mt-6 space-y-4 contact-form">
+                <input type="text" placeholder="Your Name" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none">
+                <input type="email" placeholder="Your Email" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none">
+                <textarea placeholder="Your Message" class="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-400 focus:outline-none" rows="4"></textarea>
+                <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition duration-300">Send Message</button>
+            </form>
+
+            <!-- ปุ่มไอคอน Facebook แบบวงกลมเล็ก -->
+            <div class="mt-6 flex justify-end">
+                <a href="https://www.facebook.com/samosornhouse" target="_blank"
+                   class="w-10 h-10 flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-full transition duration-300">
+                   <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 text-center">
+        <p>&copy; 2024 Luxury Vacation Homes. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function setupSlider(sliderId, prevBtnId, nextBtnId) {
+            let currentIndex = 0;
+            const slider = document.getElementById(sliderId);
+            const totalImages = slider.children.length;
+
+            function nextSlide() {
+                if (currentIndex < totalImages - 1) {
+                    currentIndex++;
+                } else {
+                    currentIndex = 0;
+                }
+                updateSliderPosition();
+            }
+
+            function prevSlide() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                } else {
+                    currentIndex = totalImages - 1;
+                }
+                updateSliderPosition();
+            }
+
+            function updateSliderPosition() {
+                const offset = -currentIndex * 50;
+                slider.style.transform = `translateX(${offset}%)`;
+            }
+
+            document.getElementById(nextBtnId).addEventListener('click', nextSlide);
+            document.getElementById(prevBtnId).addEventListener('click', prevSlide);
+        }
+
+        // Setup slider for card 1
+        setupSlider('slider1', 'prevBtn1', 'nextBtn1');
+        setupSlider('slider2', 'prevBtn2', 'nextBtn2');
+        setupSlider('slider3', 'prevBtn3', 'nextBtn3');
+        setupSlider('slider4', 'prevBtn4', 'nextBtn4');
+        setupSlider('slider5', 'prevBtn5', 'nextBtn5');
+        setupSlider('slider6', 'prevBtn6', 'nextBtn6');
+        // หากคุณเพิ่ม House Card เพิ่ม ให้ก็อปปี้ฟังก์ชัน setupSlider และเปลี่ยน id ตาม House Card
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var swiper = new Swiper('.swiper-container', {
+            loop: true, // สไลด์แบบวนลูป
+            autoplay: {
+              delay: 3000, // เลื่อนอัตโนมัติทุก 3 วินาที
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+            effect: 'fade', // ลองเปลี่ยนเป็น 'slide' หรือ 'fade' หรือ 'cube' ฯลฯ
+          });
+        });
+      </script>
+      
+</body>
+</html>
